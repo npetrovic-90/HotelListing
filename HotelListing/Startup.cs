@@ -1,6 +1,8 @@
 using AutoMapper;
 using HotelListing.Configurations;
 using HotelListing.Data;
+using HotelListing.IRepository;
+using HotelListing.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +33,10 @@ namespace HotelListing
 			});
 
 			//adding controllers
-			services.AddControllers();
+			services.AddControllers().AddNewtonsoftJson(option =>
+			{
+				option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+			});
 
 			//adding cors policy
 
@@ -48,6 +53,10 @@ namespace HotelListing
 			//auto mapper service
 
 			services.AddAutoMapper(typeof(MapperInitializer));
+
+			//registering services for api
+
+			services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 			services.AddSwaggerGen(c =>
 			{
