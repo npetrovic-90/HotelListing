@@ -3,6 +3,7 @@ using HotelListing.Configurations;
 using HotelListing.Data;
 using HotelListing.IRepository;
 using HotelListing.Repository;
+using HotelListing.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,13 @@ namespace HotelListing
 				options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"));
 			});
 
+			//Identity for users 
+
+			services.AddAuthentication();
+			services.ConfigureIdentity();
+			//JWT configuration
+			services.ConfigureJWT(Configuration);
+
 			//adding controllers
 			services.AddControllers().AddNewtonsoftJson(option =>
 			{
@@ -55,7 +63,7 @@ namespace HotelListing
 			services.AddAutoMapper(typeof(MapperInitializer));
 
 			//registering services for api
-
+			services.AddScoped<IAuthManager, AuthManager>();
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 			services.AddSwaggerGen(c =>
@@ -82,6 +90,7 @@ namespace HotelListing
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
