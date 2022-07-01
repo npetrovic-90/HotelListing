@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace HotelListing.Controllers
 {
-	[Route("api/[controller]")]
+	[ApiVersion("2.0")]
+	[Route("api/country")]
 	[ApiController]
-	public class CountryController : ControllerBase
+	public class CountryV2Controller : ControllerBase
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly ILogger<CountryController> _logger;
 		private readonly IMapper _mapper;
 
-		public CountryController(IUnitOfWork unitOfWork, ILogger<CountryController> logger, IMapper mapper)
+		public CountryV2Controller(IUnitOfWork unitOfWork, ILogger<CountryController> logger, IMapper mapper)
 		{
 			_logger = logger;
 			_unitOfWork = unitOfWork;
@@ -29,7 +30,6 @@ namespace HotelListing.Controllers
 
 
 		[HttpGet]
-
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<IActionResult> GetCountries([FromQuery] RequestParams requestParams)
