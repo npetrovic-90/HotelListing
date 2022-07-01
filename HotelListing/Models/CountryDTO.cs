@@ -20,4 +20,10 @@ namespace HotelListing.Models
 		[StringLength(maximumLength: 3, ErrorMessage = "Acronym is too long!")]
 		public string ShortName { get; set; }
 	}
+
+	public class UpdateCountryDTO : CreateCountryDTO
+	{
+
+		public IList<CreateHotelDTO> Hotels { get; set; }
+	}
 }

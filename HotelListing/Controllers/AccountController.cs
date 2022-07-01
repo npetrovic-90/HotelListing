@@ -2,6 +2,7 @@
 using HotelListing.Data;
 using HotelListing.Models;
 using HotelListing.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,9 @@ namespace HotelListing.Controllers
 
 		[HttpPost]
 		[Route("register")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<IActionResult> Register([FromBody] UserDTO userDTO)
 		{
 
@@ -71,6 +75,9 @@ namespace HotelListing.Controllers
 
 		[HttpPost]
 		[Route("login")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<IActionResult> LogIn([FromBody] LogInUserDTO userDTO)
 		{
 
